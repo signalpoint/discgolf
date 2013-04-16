@@ -19,21 +19,53 @@ var strokes = 0;
 // Handle keyboard controls
 var keysDown = {};
 
-// Reset the game when the player catches a basket.
+addEventListener("keydown", function (e) {
+	keysDown[e.keyCode] = true;
+}, false);
+
+addEventListener("keyup", function (e) {
+	delete keysDown[e.keyCode];
+}, false);
+
+addEventListener('mousemove', function(event){
+    var position = get_mouse_position();
+    strokes = 'x: ' + position.x + ' / y: ' + position.y;
+}, false);
+
+addEventListener('mousedown', function(event){
+    alert('mousedown');
+}, false);
+
+addEventListener('mouseup', function(event){
+    alert('mouseup');
+}, false);
+
+/**
+ *
+ */
+function get_mouse_position() {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
+}
+
+// Reset the game.
 var reset = function () {
 
 };
 
-// Update game objects
-var update = function (modifier,now,then) {
+// Update game objects.
+var update = function (modifier, now, then) {
 
 };
 
-// Draw everything
+// Draw everything.
 var render = function () {
   
   // Set canvas background color.
-  ctx.fillStyle="#FFFFFF";
+  ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
 	// Score
@@ -45,7 +77,7 @@ var render = function () {
 
 };
 
-// The main game loop
+// The main game loop.
 var main = function () {
 	var now = Date.now();
 	var delta = now - then;
@@ -60,3 +92,4 @@ var main = function () {
 reset();
 var then = Date.now();
 setInterval(main, 1); // Execute as fast as possible
+
